@@ -19,6 +19,6 @@ software.
 
 This notice shall supercede any other notices contained within the software.
 
-Author: Xin Wang <xinw@snl.salk.edu>
+Xin Wang <xinw@snl.salk.edu>
 
 --------------------------------------------------------------------------------
