@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # --------------------------------------------------------------------------------
 # (c) COPYRIGHT 2015 The Salk Institute.  All rights reserved.
 #
@@ -25,6 +27,7 @@ import matplotlib.pyplot as P
 fileName        = "data/Raw data-7 dpf AB in agarose or trap 011015-Trial     5.xlsx"
 xVar            = "Trial time (s)"
 yVar            = "Activity continuous ()"
+chan1, chan2    = "Track-left gill-Subject 1", "Track-right gill-Subject 1"
 
 # load data
 record          = noldusDataIO.dataImport(fileName)
@@ -33,11 +36,16 @@ chan            = record.keys()
 nChan           = len(chan)
 # plot all measurement channels
 ax = []
+x, y = [], []
 for i in xrange(nChan):
     ax.append(P.subplot(nChan, 1, i+1))
-    x, y = record[chan[i]]['data'][xVar], record[chan[i]]['data'][yVar]
-    P.plot(x, y)
+    x.append(record[chan[i]]['data'][xVar])
+    y.append(record[chan[i]]['data'][yVar])
+    P.plot(x[i], y[i])
     P.title(chan[i])
     P.xlabel(xVar)
     P.ylabel(yVar)
 P.show()
+
+x1, y1 = record[chan1]['data'][xVar], record[chan1]['data'][yVar]
+x2, y2 = record[chan2]['data'][xVar], record[chan2]['data'][yVar]
