@@ -21,6 +21,7 @@
 
 # dependencies
 import noldusDataIO
+import numpy as N
 import matplotlib.pyplot as P
 
 # parameters
@@ -35,17 +36,28 @@ record          = noldusDataIO.dataImport(fileName)
 chan            = record.keys()
 nChan           = len(chan)
 # plot all measurement channels
-ax = []
-x, y = [], []
-for i in xrange(nChan):
-    ax.append(P.subplot(nChan, 1, i+1))
-    x.append(record[chan[i]]['data'][xVar])
-    y.append(record[chan[i]]['data'][yVar])
-    P.plot(x[i], y[i])
-    P.title(chan[i])
-    P.xlabel(xVar)
-    P.ylabel(yVar)
-P.show()
+# ax = []
+# x, y = [], []
+# for i in xrange(nChan):
+#     ax.append(P.subplot(nChan, 1, i+1))
+#     x.append(record[chan[i]]['data'][xVar])
+#     y.append(record[chan[i]]['data'][yVar])
+#     P.plot(x[i], y[i])
+#     P.title(chan[i])
+#     P.xlabel(xVar)
+#     P.ylabel(yVar)
+# P.show()
 
 x1, y1 = record[chan1]['data'][xVar], record[chan1]['data'][yVar]
 x2, y2 = record[chan2]['data'][xVar], record[chan2]['data'][yVar]
+
+y1 = N.interp(x1, x1[~N.isnan(y1)], y1[~N.isnan(y1)])
+y2 = N.interp(x2, x2[~N.isnan(y2)], y2[~N.isnan(y2)])
+
+dt = N.mean(N.diff(x1))
+
+xcorr = N.correlate(y1, y2, 'full')
+tcorr = dt * N.array(range(-len(xcorr)/2+1, len(xcorr)/2+1))
+
+P.plot(tcorr, xcorr)
+P.show()

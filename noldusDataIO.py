@@ -52,7 +52,7 @@ def dataImport(fileName, sheetNameList = None):
         experiment[wsn]['data'] = {} # real data now
         for i in xrange(ws.ncols):
             field = ws.cell_value(nHeaderLine-2, i)+' '+ws.cell_value(nHeaderLine-1, i)
-            experiment[wsn]['data'][field] = N.empty([nRow-nHeaderLine, 1])
+            experiment[wsn]['data'][field] = N.empty(nRow-nHeaderLine)
             for j in xrange(nHeaderLine, nRow):
                 if ws.cell_type(j, i) == 2:
                      temp = ws.cell_value(j, i)
